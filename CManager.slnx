@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CManager.Core/CManager.Core.csproj" />
+  <Project Path="CManager.Infrastructure/CManager.Infrastructure.csproj" />
+  <Project Path="CManager.Presentation.ConsoleApp/CManager.Presentation.ConsoleApp.csproj" />
+  <Project Path="CManager.Services/CManager.Services.csproj" />
+</Solution>
