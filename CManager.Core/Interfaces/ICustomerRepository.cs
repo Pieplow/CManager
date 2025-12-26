@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using CManager.Core.Models;
 
 namespace CManager.Core.Interfaces
 {
-    internal interface ICustomerRepository
+    public interface ICustomerRepository
     {
+        List<Customer> GetAll();
+
+        bool SaveAll(List<Customer> customers);
+    
     }
 }
