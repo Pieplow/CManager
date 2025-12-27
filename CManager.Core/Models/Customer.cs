@@ -10,7 +10,7 @@ namespace CManager.Core.Models
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
-        public  Guid id { get; set; } = string.Empty;
+        public  Guid Id { get; set; } = string.Empty;
 
     }
 }
