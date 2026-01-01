@@ -4,10 +4,10 @@ using CManager.Core.Models;
 
 namespace CManager.Infrastructure
 {
-    public class JsonCustomerRepository : ICustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly string FilePath = "Data/customers.json";
-        public JsonCustomerRepository() { }
+        public CustomerRepository() { }
 
         /// <summary>
         /// Retrieves a customer by their email address.
@@ -38,6 +38,7 @@ namespace CManager.Infrastructure
             return customers ?? new List<Customer>();
         }
 
+        
         public bool SaveAll(List<Customer> customers)
         {
             if (customers == null)
@@ -71,16 +72,9 @@ namespace CManager.Infrastructure
                 return false;
             }
 
-            customerToUpdate.Id = customerToUpdate.Id;
-            customerToUpdate.FirstName = customer.FirstName ?? customerToUpdate.FirstName;
-            customerToUpdate.LastName = customer.LastName ?? customerToUpdate.LastName;
-            customerToUpdate.PhoneNumber = customer.PhoneNumber ?? customerToUpdate.PhoneNumber;
-
-            customerToUpdate.Address.PostalCode = customer.Address.PostalCode;
-            customerToUpdate.Address.City = customer.Address.City;
-            customerToUpdate.Address.Street = customer.Address.Street;
-
+            customerToUpdate = customer;
             return SaveAll(customers);
+
         }
  
         public bool DeleteCustomer(string email)

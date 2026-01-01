@@ -11,6 +11,6 @@ namespace CManager.Core.Interfaces
         
         IEnumerable<Customer> GetAllCustomers(out bool hasError);
 
-        bool DeleteCustomer(Guid id);
+        bool DeleteCustomer(string email);
     }
 }

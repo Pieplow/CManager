@@ -8,14 +8,16 @@ namespace CManager.Services
         private readonly ICustomerRepository _repository;
         public CustomerService(ICustomerRepository repository) => _repository = repository;
 
-        public bool DeleteCustomer(Guid id)
+        public Customer GetCustomerByEmail(string email)
         {
-            throw new NotImplementedException();
+            var customer = _repository.GetCustomerByEmail(email);
+
+            return customer ?? new Customer();
         }
 
         public IEnumerable<Customer> GetAllCustomers(out bool hasError)
         {
-            try     
+            try
             {
                 hasError = false;
                 return _repository.GetAll();
@@ -62,6 +64,41 @@ namespace CManager.Services
             {
                 return false;
             }
+        }
+
+        public bool UpdateCustomer(
+            string email,
+            string firstName,
+            string lastName,
+            string phoneNumber,
+            string streetAddress,
+            string postalCode,
+            string city)
+        {
+            var customer = _repository.GetCustomerByEmail(email);
+            if (customer == null)
+            {
+                return false;
+            }
+
+            customer.FirstName = firstName;
+            customer.LastName = lastName;
+            customer.PhoneNumber = phoneNumber;
+            customer.Address.Street = streetAddress;
+            customer.Address.PostalCode = postalCode;
+            customer.Address.City = city;
+
+            return _repository.UpdateCustomer(customer);
+        }
+
+        public bool DeleteCustomer(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return false;
+            }
+
+            return _repository.DeleteCustomer(email);
         }
     }
 }

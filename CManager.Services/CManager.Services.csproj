@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CManager.Core\CManager.Core.csproj" />
+    <ProjectReference Include="..\CManager.Infrastructure\CManager.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
