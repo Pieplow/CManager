@@ -1,14 +1,12 @@
 ﻿using CManager.Core.Interfaces;
 using CManager.Core.Models;
-using System.Linq.Expressions;
 
 namespace CManager.Services
 {
     public class CustomerService : ICustomerService
     {
-
-        private readonly ICustomerRepository _Repository;
-        public CustomerService(ICustomerRepository repository) => _Repository = repository;
+        private readonly ICustomerRepository _repository;
+        public CustomerService(ICustomerRepository repository) => _repository = repository;
 
         public bool DeleteCustomer(Guid id)
         {
@@ -17,9 +15,10 @@ namespace CManager.Services
 
         public IEnumerable<Customer> GetAllCustomers(out bool hasError)
         {
-            try              {
+            try     
+            {
                 hasError = false;
-                return _Repository.GetAll();
+                return _repository.GetAll();
             }
             catch
             {
@@ -28,18 +27,18 @@ namespace CManager.Services
             }
         }
 
-        public bool RegisterCustomer(
-        string firstName,
-        string lastName,
-        string email,
-        string phoneNumber,
-        string streetAddress,
-        string postalCode,
-        string city)
+        public bool AddCustomer(
+            string firstName,
+            string lastName,
+            string email,
+            string phoneNumber,
+            string streetAddress,
+            string postalCode,
+            string city)
         {
             try
             {
-                var customers = _Repository.GetAll();
+                var customers = _repository.GetAll();
 
                 var newCustomer = new Customer
                 {
@@ -55,9 +54,9 @@ namespace CManager.Services
                         City = city
                     }
                 };
-                /*spara listan i minnet */
+                // Add the new customer to the list
                 customers.Add(newCustomer);
-                return _Repository.SaveAll(customers);
+                return _repository.SaveAll(customers);
             }
             catch
             {

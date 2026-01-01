@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Text.Json;
-using System.Collections.Generic;
+﻿using System.Text.Json;
 using CManager.Core.Interfaces;
 using CManager.Core.Models;
 
@@ -8,44 +6,94 @@ namespace CManager.Infrastructure
 {
     public class JsonCustomerRepository : ICustomerRepository
     {
-        private readonly string _filePath;
-        public JsonCustomerRepository(string filePath = "Data/customers.json")
+        private readonly string FilePath = "Data/customers.json";
+        public JsonCustomerRepository() { }
+
+        /// <summary>
+        /// Retrieves a customer by their email address.
+        /// </summary>
+        /// <param name="email">Email to find a single customer</param>
+        /// <returns>Single customer</returns>
+        public Customer? GetCustomerByEmail(string email)
         {
-            _filePath = filePath;
+            var customers = GetAll();
+            return customers.Find(c => c.Email == email);
         }
+
+        /// <summary>
+        /// Retrieves all customers stored in the data file.
+        /// </summary>
+        /// <returns>A list of <see cref="Customer"/> objects representing all customers. Returns an empty list if no customers
+        /// are found or if the data file does not exist.</returns>
         public List<Customer> GetAll()
         {
-            if (!File.Exists(_filePath))
-            { 
-                
-               return new List<Customer>(); 
-            
+            if (!File.Exists(FilePath))
+            {
+                return new List<Customer>();
             }
-               
-            var json = File.ReadAllText(_filePath);
+
+            var json = File.ReadAllText(FilePath);
             var customers = System.Text.Json.JsonSerializer.Deserialize<List<Customer>>(json);
 
             return customers ?? new List<Customer>();
-
         }
 
         public bool SaveAll(List<Customer> customers)
         {
-            var directory = Path.GetDirectoryName(_filePath);
+            if (customers == null)
+            {
+                return false;
+            }
 
-            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+            string directory = Path.GetDirectoryName(FilePath)!;
+
+
+            if (string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
 
-            var json = System.Text.Json.JsonSerializer.Serialize(customers, new System.Text.Json.JsonSerializerOptions
+            var json = JsonSerializer.Serialize(customers, new JsonSerializerOptions
             {
                 WriteIndented = true
             });
 
-            File.WriteAllText(_filePath, json);
+            File.WriteAllText(FilePath, json);
             return true;
         }
 
+        public bool UpdateCustomer(Customer customer)
+        {
+            var customers = GetAll();
+            var customerToUpdate = customers.Find(c => c.Email == customer.Email );
+            if (customerToUpdate == null)
+            {
+                return false;
+            }
+
+            customerToUpdate.Id = customerToUpdate.Id;
+            customerToUpdate.FirstName = customer.FirstName ?? customerToUpdate.FirstName;
+            customerToUpdate.LastName = customer.LastName ?? customerToUpdate.LastName;
+            customerToUpdate.PhoneNumber = customer.PhoneNumber ?? customerToUpdate.PhoneNumber;
+
+            customerToUpdate.Address.PostalCode = customer.Address.PostalCode;
+            customerToUpdate.Address.City = customer.Address.City;
+            customerToUpdate.Address.Street = customer.Address.Street;
+
+            return SaveAll(customers);
+        }
+ 
+        public bool DeleteCustomer(string email)
+        {
+            var customers = GetAll();
+            var customerToRemove = customers.Find(c => c.Email == email);
+            if (customerToRemove == null)
+            {
+                return false;
+            }
+
+            customers.Remove(customerToRemove);
+            return SaveAll(customers);
+        }
     }
 }
