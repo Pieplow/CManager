@@ -7,7 +7,7 @@ namespace CManager.Core.Interfaces
 {
     public interface ICustomerService
     {
-        bool AddCustomer(string firstName, string lastName, string email, string phoneNumber, string streetAddress, string postalCode, string city);
+        bool CreateCustomer(string firstName, string lastName, string email, string phoneNumber, string streetAddress, string postalCode, string city);
         
         IEnumerable<Customer> GetAllCustomers(out bool hasError);
 

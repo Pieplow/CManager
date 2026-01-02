@@ -1,0 +1,24 @@
+﻿using CManager.Core.Models;
+
+namespace CManager.Infrastructure.Interfaces
+{
+    public interface IJsonFormatter
+    {
+        /// <summary>
+        /// Loads a list of customers from the file specified by the current file path.
+        /// </summary>
+        /// <remarks>If the file is missing or contains invalid or empty data, the method returns an empty
+        /// list rather than throwing an exception. The returned list will never be null.</remarks>
+        /// <returns>A list of <see cref="Customer"/> objects deserialized from the file. Returns an empty list if the file does
+        /// not exist or contains no customers.</returns>
+        List<Customer> LoadCustomersFromFile();
+
+        /// <summary>
+        /// Saves the specified list of customers to a file in JSON format, overwriting any existing content.
+        /// </summary>
+        /// <remarks>The file is written using indented JSON formatting for readability. If the file already
+        /// exists at the configured path, its contents will be replaced.</remarks>
+        /// <param name="customers">The list of customers to be saved. Cannot be null.</param>
+        bool SaveCustomersToFile(List<Customer> customers);
+    }
+}
