@@ -27,7 +27,7 @@ namespace CManager.Infrastructure
             {
                 return false;
             }
-            
+
             var customers = _jsonFormatter.LoadCustomersFromFile();
             if (customers.Any(c => c.Email == customer.Email))
             {
@@ -38,7 +38,7 @@ namespace CManager.Infrastructure
 
             return _jsonFormatter.SaveCustomersToFile(customers);
         }
-        
+
         /// <summary>
         /// Retrieves a customer by their email address.
         /// </summary>
@@ -73,18 +73,16 @@ namespace CManager.Infrastructure
         {
             var customers = _jsonFormatter.LoadCustomersFromFile();
 
-            var existingCustomer = customers.FirstOrDefault(c => c.Email == updatedCustomer.Email);
-            if (existingCustomer == null)
+            if (!customers.Any(c => c.Email == updatedCustomer.Email))
+            {
                 return false;
+            }
 
-            existingCustomer.FirstName = updatedCustomer.FirstName;
-            existingCustomer.LastName = updatedCustomer.LastName;
-            existingCustomer.PhoneNumber = updatedCustomer.PhoneNumber;
-            existingCustomer.Address.Street = updatedCustomer.Address.Street;
-            existingCustomer.Address.PostalCode = updatedCustomer.Address.PostalCode;
-            existingCustomer.Address.City = updatedCustomer.Address.City;
+            var updatedList = customers.
+                Select(c => c.Email == updatedCustomer.Email ? updatedCustomer : c)
+                .ToList();
 
-            return _jsonFormatter.SaveCustomersToFile(customers);
+            return _jsonFormatter.SaveCustomersToFile(updatedList);
         }
 
         /// <summary>

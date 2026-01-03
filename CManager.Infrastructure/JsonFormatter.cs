@@ -37,12 +37,20 @@ namespace CManager.Infrastructure
 
         /// <summary>
         /// Saves the specified list of customers to a file in JSON format, overwriting any existing content.
+        /// Creates the directory if it does not exist.
         /// </summary>
         /// <remarks>The file is written using indented JSON formatting for readability. If the file already
         /// exists at the configured path, its contents will be replaced.</remarks>
         /// <param name="customers">The list of customers to be saved. Cannot be null.</param>
         public bool SaveCustomersToFile(List<Customer> customers)
         {
+            string directory = Path.GetDirectoryName(_filePath)!;
+
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
             string json = JsonSerializer.Serialize(customers, new JsonSerializerOptions
             {
                 WriteIndented = true
