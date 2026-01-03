@@ -1,5 +1,4 @@
-﻿using CManager.Core.Interfaces;
-using CManager.Core.Models;
+﻿using CManager.Core.Models;
 using CManager.Infrastructure;
 using CManager.Infrastructure.Interfaces;
 
@@ -14,18 +13,11 @@ namespace CManager.Services
             _repository = repository;
         }
 
-        public bool CreateCustomer(
-            string firstName,
-            string lastName,
-            string email,
-            string phoneNumber,
-            string streetAddress,
-            string postalCode,
-            string city)
+        public bool CreateCustomer(Customer customer)
         {
             try
             {
-                Customer customer = Factory.Create(firstName, lastName, email, phoneNumber, streetAddress, postalCode, city);
+                Customer newCustomer = Factory.Create(customer);
                 return _repository.CreateCustomer(customer);
             }
             catch
@@ -41,7 +33,7 @@ namespace CManager.Services
             return customer ?? new Customer();
         }
 
-        public IEnumerable<Customer> GetAllCustomers(out bool hasError)
+        public List<Customer> GetAllCustomers(out bool hasError)
         {
             try
             {

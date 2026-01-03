@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
-using CManager.Core.Interfaces;
 using CManager.Core.Models;
 using CManager.Infrastructure.Interfaces;
 

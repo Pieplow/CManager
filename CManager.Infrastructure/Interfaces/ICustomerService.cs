@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CManager.Core.Models;
+﻿using CManager.Core.Models;
 
-namespace CManager.Core.Interfaces
+namespace CManager.Infrastructure.Interfaces
 {
     public interface ICustomerService
     {
-        bool CreateCustomer(string firstName, string lastName, string email, string phoneNumber, string streetAddress, string postalCode, string city);
-        
-        IEnumerable<Customer> GetAllCustomers(out bool hasError);
+        bool CreateCustomer(Customer customer);
 
+        List<Customer> GetAllCustomers(out bool hasError);
+        
+        Customer GetCustomerByEmail(string email);
+
+        bool UpdateCustomer(string email, string firstName, string lastName, string phoneNumber, string streetAddress, string postalCode, string city);
+        
         bool DeleteCustomer(string email);
+
+
     }
 }

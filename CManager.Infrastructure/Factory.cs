@@ -4,27 +4,20 @@ namespace CManager.Infrastructure
 {
     public class Factory
     {
-        public static Customer Create(
-            string firstName,
-            string lastName,
-            string email,
-            string phoneNumber,
-            string streetAddress,
-            string postalCode,
-            string city)
+        public static Customer Create(Customer customer)
         {
             return new Customer
             {
                 Id = Guid.NewGuid(),
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                PhoneNumber = phoneNumber,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Email = customer.Email,
+                PhoneNumber = customer.PhoneNumber,
                 Address = new Address
                 {
-                    Street = streetAddress,
-                    PostalCode = postalCode,
-                    City = city
+                    Street = customer.Address.Street,
+                    PostalCode = customer.Address.PostalCode,
+                    City = customer.Address.City
                 }
             };
         }
