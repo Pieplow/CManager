@@ -17,6 +17,11 @@ namespace CManager.Services
         {
             try
             {
+                if (CustomerExists(customer.Email)) 
+                { 
+                    return false;
+                }
+
                 Customer newCustomer = Factory.Create(customer);
                 return _repository.CreateCustomer(customer);
             }
@@ -33,30 +38,29 @@ namespace CManager.Services
             return customer ?? new Customer();
         }
 
-        public List<Customer> GetAllCustomers(out bool hasError)
+        public List<Customer> GetAllCustomers()
         {
             try
             {
-                hasError = false;
                 return _repository.GetAllCustomers();
             }
             catch
             {
-                hasError = true;
                 return [];
             }
         }
 
         public bool UpdateCustomer(
-            string email,
+            string currentUserEmail,
             string firstName,
             string lastName,
+            string email,
             string phoneNumber,
             string streetAddress,
             string postalCode,
             string city)
         {
-            var customer = _repository.GetCustomerByEmail(email);
+            var customer = _repository.GetCustomerByEmail(currentUserEmail);
             if (customer == null)
             {
                 return false;
@@ -64,7 +68,7 @@ namespace CManager.Services
 
             Customer updatedCustomer = Factory.Update(customer, firstName, lastName, email, phoneNumber, streetAddress, postalCode, city);
 
-            return _repository.UpdateCustomer(updatedCustomer);
+            return _repository.UpdateCustomer(currentUserEmail, updatedCustomer);
         }
 
         public bool DeleteCustomer(string email)
@@ -75,6 +79,17 @@ namespace CManager.Services
             }
 
             return _repository.DeleteCustomer(email);
+        }
+
+        public bool CustomerExists(string email)
+        {
+            var customer = _repository.GetCustomerByEmail(email);
+            return customer != null;
+        }
+
+        public bool DeleteAllCustomers()
+        { 
+            return _repository.DeleteAllCustomers();
         }
     }
 }

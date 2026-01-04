@@ -36,7 +36,7 @@ namespace CManager.Infrastructure.Interfaces
         /// <param name="customer">The customer object containing the updated information. The customer's email is used to identify which
         /// customer to update. Cannot be null.</param>
         /// <returns>true if the customer was found and updated successfully; otherwise, false.</returns>
-        bool UpdateCustomer(Customer customer);
+        bool UpdateCustomer(string oldUserEmail, Customer customer);
 
         /// <summary>
         /// Deletes the customer with the specified email address from the data store.
@@ -44,6 +44,15 @@ namespace CManager.Infrastructure.Interfaces
         /// <param name="email">The email address of the customer to delete. Cannot be null or empty.</param>
         /// <returns>true if the customer was found and deleted successfully; otherwise, false.</returns>
         bool DeleteCustomer(string email);
+
+        /// <summary>
+        /// Deletes all customer records from the data store.
+        /// </summary>
+        /// <remarks>Use this method with caution, as it will remove all customer data and cannot be
+        /// undone. This operation may affect related data or system integrity if other entities depend on customer
+        /// records.</remarks>
+        /// <returns>true if all customers were successfully deleted; otherwise, false.</returns>
+        bool DeleteAllCustomers();
     }
 }
 

@@ -6,14 +6,14 @@ namespace CManager.Infrastructure.Interfaces
     {
         bool CreateCustomer(Customer customer);
 
-        List<Customer> GetAllCustomers(out bool hasError);
+        List<Customer> GetAllCustomers();
         
         Customer GetCustomerByEmail(string email);
 
-        bool UpdateCustomer(string email, string firstName, string lastName, string phoneNumber, string streetAddress, string postalCode, string city);
+        bool UpdateCustomer(string currentUserEmail, string email, string firstName, string lastName, string phoneNumber, string streetAddress, string postalCode, string city);
         
         bool DeleteCustomer(string email);
 
-
+        bool DeleteAllCustomers();
     }
 }

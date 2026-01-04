@@ -4,8 +4,9 @@
     {
         void AddCustomer();
         void GetCustomerByEmail();
+        void ViewAllCustomers();
         void UpdateCustomer();
         void DeleteCustomer();
-        void ViewAllCustomers();
+        void DeleteAllCustomers();
     }
 }

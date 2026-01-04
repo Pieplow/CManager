@@ -69,17 +69,17 @@ namespace CManager.Infrastructure
         /// <param name="customer">The customer object containing the updated information. The customer's email is used to identify which
         /// customer to update. Cannot be null.</param>
         /// <returns>true if the customer was found and updated successfully; otherwise, false.</returns>
-        public bool UpdateCustomer(Customer updatedCustomer)
+        public bool UpdateCustomer(string oldUserEmail, Customer updatedCustomer)
         {
             var customers = _jsonFormatter.LoadCustomersFromFile();
 
-            if (!customers.Any(c => c.Email == updatedCustomer.Email))
+            if (!customers.Any(c => c.Email == oldUserEmail))
             {
                 return false;
             }
 
             var updatedList = customers.
-                Select(c => c.Email == updatedCustomer.Email ? updatedCustomer : c)
+                Select(c => c.Email == oldUserEmail ? updatedCustomer : c)
                 .ToList();
 
             return _jsonFormatter.SaveCustomersToFile(updatedList);
@@ -102,6 +102,12 @@ namespace CManager.Infrastructure
 
             customers.Remove(customerToRemove);
 
+            return _jsonFormatter.SaveCustomersToFile(customers);
+        }
+
+        public bool DeleteAllCustomers()
+        {
+            List<Customer> customers = new List<Customer>();
             return _jsonFormatter.SaveCustomersToFile(customers);
         }
     }
