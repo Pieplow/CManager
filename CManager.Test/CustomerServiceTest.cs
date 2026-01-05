@@ -26,14 +26,14 @@ namespace CManager.Test
 
         [Fact]
         public void GetCustomerByEmail_ReturnsCustomer_WhenFound()
-        {    
+        {
             // Arrange
             var mockRepository = new Mock<ICustomerRepository>();
             var expectedCustomer = new Customer { Email = "test@test.com" };
             mockRepository.Setup(r => r.GetCustomerByEmail("test@test.com")).Returns(expectedCustomer);
 
             var service = new CustomerService(mockRepository.Object);
-            
+
             // Act
             var customer = service.GetCustomerByEmail("test@test.com");
 
@@ -101,10 +101,12 @@ namespace CManager.Test
             mockRepository.Setup(r => r.UpdateCustomer(It.IsAny<string>(), It.IsAny<Customer>())).Returns(true);
             var service = new CustomerService(mockRepository.Object);
             var customer = new Customer { FirstName = "UpdatedName" };
-            var currentUserEmail = "
+            var currentUserEmail = "";
 
-        // Act
-            bool service = service.UpdateCustomer(currentUserEmail, customer.Email, customer.FirstName, customer.LastName, customer.PhoneNumber, customer.Address.Street, customer.Address.PostalCode, customer.Address.City);
-        // Assert
-            
+            // Act
+            //    bool service = service.UpdateCustomer(currentUserEmail, customer.Email, customer.FirstName, customer.LastName, customer.PhoneNumber, customer.Address.Street, customer.Address.PostalCode, customer.Address.City);
+            // Assert
+
+        }
     }
+}
