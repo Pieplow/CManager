@@ -166,15 +166,8 @@ namespace CManager.Presentation.ConsoleApp
             {
                 existingCustomer.Address.PostalCode = newPostalCode;
             }
-            var success = _customerService.UpdateCustomer(
-                emailToUpdate,
-                existingCustomer.FirstName,
-                existingCustomer.LastName,
-                existingCustomer.Email,
-                existingCustomer.PhoneNumber,
-                existingCustomer.Address.Street,
-                existingCustomer.Address.City,
-                existingCustomer.Address.PostalCode);
+
+            var success = _customerService.UpdateCustomer(existingCustomer);
 
             if (success)
             {

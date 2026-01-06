@@ -51,24 +51,29 @@ namespace CManager.Services
         }
 
         public bool UpdateCustomer(
-            string currentUserEmail,
-            string firstName,
-            string lastName,
-            string email,
-            string phoneNumber,
-            string streetAddress,
-            string postalCode,
-            string city)
+            Customer updateCustomer,
+            //Inparameter is optional
+            string? currentUserEmail = null)
         {
-            var customer = _repository.GetCustomerByEmail(currentUserEmail);
+            var identifierEmail = currentUserEmail ?? updateCustomer.Email;
+
+            var customer = _repository.GetCustomerByEmail(identifierEmail);
             if (customer == null)
             {
                 return false;
             }
 
-            Customer updatedCustomer = Factory.Update(customer, firstName, lastName, email, phoneNumber, streetAddress, postalCode, city);
+            Customer updatedCustomer = Factory.Update(
+                customer,
+                updateCustomer.FirstName,
+                updateCustomer.LastName,
+                updateCustomer.Email,
+                updateCustomer.PhoneNumber,
+                updateCustomer.Address.Street,
+                updateCustomer.Address.PostalCode,
+                updateCustomer.Address.City);
 
-            return _repository.UpdateCustomer(currentUserEmail, updatedCustomer);
+            return _repository.UpdateCustomer(identifierEmail, updatedCustomer);
         }
 
         public bool DeleteCustomer(string email)

@@ -8,6 +8,18 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Views\UserControl2.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\GetCustomersView" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\UserControl2.xaml" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />

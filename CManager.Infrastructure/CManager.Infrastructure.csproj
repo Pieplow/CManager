@@ -7,6 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Interfaces\NewFile1.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\CManager.Core\CManager.Core.csproj" />
 	</ItemGroup>
 

@@ -1,7 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection; // Fixes CS1061: adds GetRequiredService extension
-using CManager.Presentation.GuiApp.ViewModels; // Fixes CS0246: ensures CustomersViewModel is found
+﻿using CManager.Core.Models;
+using CManager.Infrastructure.Interfaces;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
+using System.Collections.ObjectModel;
 
 namespace CManager.Presentation.GuiApp.ViewModels
 {
@@ -10,11 +11,17 @@ namespace CManager.Presentation.GuiApp.ViewModels
         [ObservableProperty] 
         private ObservableObject _currentViewModel;
         private readonly IServiceProvider _serviceProvider;
+        private readonly ICustomerService _service;
 
-        public MainViewModels(IServiceProvider serviceProvider)
+        public ObservableCollection<Customer> Customers { get; set; }
+
+        public MainViewModels(IServiceProvider serviceProvider, ICustomerService service)
         {
             _serviceProvider = serviceProvider;
             _currentViewModel = _serviceProvider.GetRequiredService<MenuViewModel>();
+            _service = service;
+
+            Customers = new ObservableCollection<Customer>(_service.GetAllCustomers());
         }
     }
 }

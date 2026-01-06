@@ -3,7 +3,6 @@ using CManager.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace CManager.Presentation.GuiApp.ViewModels
