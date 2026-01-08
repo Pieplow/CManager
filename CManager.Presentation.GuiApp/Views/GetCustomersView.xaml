@@ -5,47 +5,53 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CManager.Presentation.GuiApp.Views"
              xmlns:viewmodels="clr-namespace:CManager.Presentation.GuiApp.ViewModels" 
-             d:DataContext="{d:DesignInstance Type=viewmodels:GetCustomersViewModel}"
              mc:Ignorable="d" 
 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
 
     <Grid>
+        <StackPanel>
+            <DataGrid ItemsSource="{Binding CustomerList}"
+                      AutoGenerateColumns="False"
+                      Margin="10"
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="First name"
+                                        Binding="{Binding FirstName}" />
 
-        <DataGrid ItemsSource="{Binding CustomerList}"
-                  AutoGenerateColumns="False"
-                  Margin="10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="First name"
-                                    Binding="{Binding FirstName}" />
-
-                <DataGridTextColumn Header="Email"
-                                    Binding="{Binding Email}" />
+                    <DataGridTextColumn Header="Email"
+                                        Binding="{Binding Email}" />
     
 
 
-                <DataGridTemplateColumn Header="Actions">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <DataGridTemplateColumn Header="Actions">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                                <Button Content="Update"
-                                        Margin="0,0,5,0"
-                                        Click="Update_Click" />
+                                    <Button Content="Update"
+                                            Margin="0,0,5,0"
+                                            Command="{Binding DataContext.UpdateCustomerCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}" />
 
-                                <Button Content="Delete"
-                                        Margin="0,0,5,0"
-                                        Click="Delete_Click" />
+                                    <Button Content="Delete"
+                                            Margin="0,0,5,0"
+                                            Command="{Binding DataContext.DeleteCustomerCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}" />
 
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-           </DataGrid.Columns>
-        </DataGrid>
+               </DataGrid.Columns>
+            </DataGrid>
 
+            <Button Content="Back"
+                Command="{Binding BackToMenuCommand}" Margin="20, 20, 20, 2" 
+                Background="LightBlue" />
+        </StackPanel>
     </Grid>
 
 </UserControl>

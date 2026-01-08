@@ -3,32 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CManager.Presentation.GuiApp"
-        mc:Ignorable="d"
+        xmlns:views="clr-namespace:CManager.Presentation.GuiApp.Views"
         Title="MainWindow" Height="450" Width="600">
 
-
-    <Grid Margin="10">
-
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <ContentControl Content="{Binding CurrentView}" />
         
-        <TextBlock Grid.Column="0" Text="Welcome to" FontSize="16" HorizontalAlignment="Center"/>
-        <Label Grid.Column="0" Content="CManager GUI Application" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,20"/>
-
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">
-            <Button x:Name="btnAddUser" Background="LightBlue"  Margin="0,5,0,0" Click="ButtonAddName_Click">+ Add User</Button>
-            <Button x:Name="btnShowUsers" Background="LightBlue" Margin="0,5,0,0" Click="ButtonShowUsers_Click">Show Users</Button>
-            <Button x:Name="btnDeleteUser" Background="LightBlue" Margin="0,5,0,0" Click="ButtonDeleteUser_Click">Delete User</Button>
-        </StackPanel>
-        
-    </Grid>
 </Window>

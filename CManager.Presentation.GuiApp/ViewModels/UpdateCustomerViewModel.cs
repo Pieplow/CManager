@@ -1,24 +1,26 @@
 ﻿using CManager.Core.Models;
-using CManager.Infrastructure.Interfaces;
 using CManager.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
 using System.Windows;
 
 namespace CManager.Presentation.GuiApp.ViewModels
 {
-    public partial class AddCustomersViewModel : ObservableObject
+    public partial class UpdateCustomerViewModel : ObservableObject
     {
         private readonly CustomerService _customerService;
         private readonly Action _backToMenu;
 
         [ObservableProperty]
-        public Customer _newCustomer = new();
+        public Customer _updateCustomer = new();
 
         private readonly ObservableCollection<Customer> _customerList;
 
-        public AddCustomersViewModel(CustomerService customerService, ObservableCollection<Customer> sharedList, Action backToMenu)
+        public UpdateCustomerViewModel(CustomerService customerService, ObservableCollection<Customer> sharedList, Action backToMenu)
         {
             _customerService = customerService;
             _customerList = sharedList;
@@ -26,22 +28,17 @@ namespace CManager.Presentation.GuiApp.ViewModels
         }
 
         [RelayCommand]
-        public void AddCustomer()
+        public void UpdateCustomer()
         {
-            bool success = _customerService.CreateCustomer(NewCustomer);
+            bool success = _customerService.UpdateCustomer(UpdateCustomer);
 
             if (success)
             {
-                _customerList.Add(NewCustomer);
-                MessageBox.Show("Customer added successfully.");
+                _customerList.Update();
+                MessageBox.Show("Customer updated successfully.");
                 _backToMenu();
             }
         }
 
-        [RelayCommand]
-        public void BackToMenu()
-        {
-            _backToMenu();
-        }
     }
 }

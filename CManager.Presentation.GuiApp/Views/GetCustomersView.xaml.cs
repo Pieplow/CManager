@@ -16,28 +16,5 @@ namespace CManager.Presentation.GuiApp.Views
         {
             InitializeComponent();
         }
-
-        private void Update_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is Customer customer)
-            {
-                if (DataContext is GetCustomersViewModel viewModel)
-                {
-                    viewModel.UpdateCustomer(customer);
-                }
-                MessageBox.Show($"Customer {customer.FirstName} updated!");
-            }
-        }
-
-        private void Delete_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is Customer customer)
-            {
-                if (DataContext is GetCustomersViewModel viewModel)
-                {
-                    viewModel.CustomerList?.Remove(customer);
-                }
-            }
-        }
     }
 }
