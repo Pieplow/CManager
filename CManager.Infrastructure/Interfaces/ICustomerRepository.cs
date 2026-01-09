@@ -19,6 +19,13 @@ namespace CManager.Infrastructure.Interfaces
         /// <param name="email">Email to find a single customer</param>
         /// <returns>Single customer</returns>
         Customer? GetCustomerByEmail(string email);
+        /// <summary>
+        /// Retrieves a customer with the specified unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the customer to retrieve.</param>
+        /// <returns>A <see cref="Customer"/> object representing the customer with the specified identifier, or <see
+        /// langword="null"/> if no matching customer is found.</returns>
+        Customer? GetCustomerById(Guid id);
 
         /// <summary>
         /// Retrieves a list of all customers from the data source.
@@ -36,7 +43,7 @@ namespace CManager.Infrastructure.Interfaces
         /// <param name="customer">The customer object containing the updated information. The customer's email is used to identify which
         /// customer to update. Cannot be null.</param>
         /// <returns>true if the customer was found and updated successfully; otherwise, false.</returns>
-        bool UpdateCustomer(string oldUserEmail, Customer customer);
+        bool UpdateCustomer(Guid id, Customer customer);
 
         /// <summary>
         /// Deletes the customer with the specified email address from the data store.

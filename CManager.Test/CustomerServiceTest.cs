@@ -29,17 +29,37 @@ namespace CManager.Test
         {
             // Arrange
             var mockRepository = new Mock<ICustomerRepository>();
-            var expectedCustomer = new Customer { Email = "test@test.com" };
-            mockRepository.Setup(r => r.GetCustomerByEmail("test@test.com")).Returns(expectedCustomer);
+            var expectedCustomer = new Customer { Email = "Rasmus@gmail.com" };
+
+            mockRepository.Setup(r => r.GetCustomerByEmail("Rasmus@gmail.com")).Returns(expectedCustomer);
 
             var service = new CustomerService(mockRepository.Object);
 
             // Act
-            var customer = service.GetCustomerByEmail("test@test.com");
+            var customer = service.GetCustomerByEmail("Rasmus@gmail.com");
 
             // Assert
             Assert.NotNull(customer);
             Assert.Equal(expectedCustomer.Email, customer.Email);
+        }
+        
+        [Fact]
+        public void GetCustomerById_ReturnsCustomer_WhenFound()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var mockRepository = new Mock<ICustomerRepository>();
+            var expectedCustomer = new Customer { Id = id };
+            mockRepository.Setup(r => r.GetCustomerById(id)).Returns(expectedCustomer);
+
+            var service = new CustomerService(mockRepository.Object);
+
+            // Act
+            var customer = service.GetCustomerById(id);
+
+            // Assert
+            Assert.NotNull(customer);
+            Assert.Equal(expectedCustomer.Id, customer.Id);
         }
 
         [Fact]
@@ -82,6 +102,28 @@ namespace CManager.Test
         }
 
         [Fact]
+        public void UpdateCustomer_ReturnsTrue_WhenRepositorySucceeds()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var mockRepository = new Mock<ICustomerRepository>();
+            var existingCustomer = new Customer { FirstName = "OldRasmus", Id = id };
+
+            mockRepository.Setup(r => r.GetCustomerById(id)).Returns(existingCustomer);
+            mockRepository.Setup(r => r.UpdateCustomer(id, It.IsAny<Customer>())).Returns(true);
+
+            var service = new CustomerService(mockRepository.Object);
+
+            var updatedCustomer = new Customer { FirstName = "NewRasmus", Id = id };
+
+            // Act
+            var result = service.UpdateCustomer(updatedCustomer);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
         public void DeleteAllCustomers_ReturnsTrue_WhenRepositorySucceeds()
         {
             // Arrange
@@ -92,21 +134,21 @@ namespace CManager.Test
             bool result = service.DeleteAllCustomers();
             // Assert
             Assert.True(result);
+
         }
+
         [Fact]
-        public void UpdateCustomer_ReturnsTrue_WhenRepositorySucceeds()
+        public void CustomerExists_ReturnsTrue_WhenCustomerExists()
         {
             // Arrange
             var mockRepository = new Mock<ICustomerRepository>();
-            mockRepository.Setup(r => r.UpdateCustomer(It.IsAny<string>(), It.IsAny<Customer>())).Returns(true);
+            var email = "rasmus@gmail.com";
+            mockRepository.Setup(r => r.GetCustomerByEmail(email)).Returns(new Customer { Email = email });
             var service = new CustomerService(mockRepository.Object);
-            var customer = new Customer { FirstName = "UpdatedName" };
-            var currentUserEmail = "";
-
             // Act
-            //    bool service = service.UpdateCustomer(currentUserEmail, customer.Email, customer.FirstName, customer.LastName, customer.PhoneNumber, customer.Address.Street, customer.Address.PostalCode, customer.Address.City);
+            bool exists = service.CustomerExists(email);
             // Assert
-
+            Assert.True(exists);
         }
     }
 }

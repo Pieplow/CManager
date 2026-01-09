@@ -37,8 +37,9 @@ namespace CManager.Presentation.GuiApp.ViewModels
 
             Customers = new ObservableCollection<Customer>(_service.GetAllCustomers());
 
+            _updateCustomerViewModel = new UpdateCustomerViewModel(_service, Customers, ShowMenu);
             _addCustomerViewModel = new AddCustomersViewModel(_service, Customers, ShowMenu);
-            _getCustomersViewModel = new GetCustomersViewModel(_service, Customers, ShowMenu);
+            _getCustomersViewModel = new GetCustomersViewModel(_service, Customers, ShowMenu, ShowUpdate);
            
 
             ShowMenuCommand = new RelayCommand(() => ShowMenu());            
@@ -53,6 +54,16 @@ namespace CManager.Presentation.GuiApp.ViewModels
                 CurrentView = new Views.UpdateCustomerView { DataContext = _updateCustomerViewModel });
 
             CurrentView = new Views.MenuView { DataContext = this };
+        }
+
+        public void ShowUpdate(Customer customer) { 
+
+            if (customer != null)
+            {
+            _updateCustomerViewModel.SelectedCustomer = customer;
+            CurrentView = new Views.UpdateCustomerView { DataContext = _updateCustomerViewModel };
+            }
+
         }
 
         public void ShowMenu()

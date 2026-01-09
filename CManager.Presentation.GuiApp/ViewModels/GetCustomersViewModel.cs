@@ -14,18 +14,16 @@ namespace CManager.Presentation.GuiApp.ViewModels
 
         private readonly ICustomerService _service;
         private readonly Action _backToMenu;
+        private readonly Action<Customer> _onUpdate;
 
-        public GetCustomersViewModel(ICustomerService service, ObservableCollection<Customer> sharedList, Action backToMenu)
+        public GetCustomersViewModel(ICustomerService service, ObservableCollection<Customer> sharedList, Action backToMenu, Action<Customer> onUpdate)
         {
             _service = service;
             CustomerList = sharedList;
             _backToMenu = backToMenu;
+            _onUpdate = onUpdate;
         }
 
-        public GetCustomersViewModel()
-        {
-            
-        }
 
         public void LoadCustomers()
         {
@@ -36,23 +34,14 @@ namespace CManager.Presentation.GuiApp.ViewModels
             }
         }
 
+       
+
         [RelayCommand]
         public void UpdateCustomer(Customer customer)
         {
-            if (customer == null)
+            if (customer != null)
             {
-                return;
-            }
-
-            bool success = _service.UpdateCustomer(customer);
-            if (success)
-            {
-                MessageBox.Show($"Customer {customer.FirstName} updated successfully.");
-                RefreshCustomers();
-            }
-            else
-            {
-                MessageBox.Show($"Failed to update customer {customer.FirstName}.");
+                _onUpdate?.Invoke(customer);
             }
         }
 

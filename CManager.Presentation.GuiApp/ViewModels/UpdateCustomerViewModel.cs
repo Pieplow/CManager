@@ -16,7 +16,7 @@ namespace CManager.Presentation.GuiApp.ViewModels
         private readonly Action _backToMenu;
 
         [ObservableProperty]
-        public Customer _updateCustomer = new();
+        public Customer _selectedCustomer = new();
 
         private readonly ObservableCollection<Customer> _customerList;
 
@@ -30,15 +30,19 @@ namespace CManager.Presentation.GuiApp.ViewModels
         [RelayCommand]
         public void UpdateCustomer()
         {
-            bool success = _customerService.UpdateCustomer(UpdateCustomer);
+            bool success = _customerService.UpdateCustomer(SelectedCustomer);
 
             if (success)
             {
-                _customerList.Update();
                 MessageBox.Show("Customer updated successfully.");
                 _backToMenu();
             }
-        }
+         }
 
+        [RelayCommand]
+        public void BackToMenu()
+        {
+            _backToMenu();
+        }
     }
 }

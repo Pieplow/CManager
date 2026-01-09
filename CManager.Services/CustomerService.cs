@@ -31,6 +31,11 @@ namespace CManager.Services
             }
         }
 
+        public Customer? GetCustomerById(Guid id)
+        {
+            return _repository.GetCustomerById(id);
+        }
+
         public Customer GetCustomerByEmail(string email)
         {
             var customer = _repository.GetCustomerByEmail(email);
@@ -51,13 +56,10 @@ namespace CManager.Services
         }
 
         public bool UpdateCustomer(
-            Customer updateCustomer,
-            //Inparameter is optional
-            string? currentUserEmail = null)
+            Customer updateCustomer)
         {
-            var identifierEmail = currentUserEmail ?? updateCustomer.Email;
 
-            var customer = _repository.GetCustomerByEmail(identifierEmail);
+            var customer = _repository.GetCustomerById(updateCustomer.Id);
             if (customer == null)
             {
                 return false;
@@ -73,7 +75,7 @@ namespace CManager.Services
                 updateCustomer.Address.PostalCode,
                 updateCustomer.Address.City);
 
-            return _repository.UpdateCustomer(identifierEmail, updatedCustomer);
+            return _repository.UpdateCustomer(customer.Id, updatedCustomer);
         }
 
         public bool DeleteCustomer(string email)

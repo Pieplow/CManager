@@ -10,7 +10,7 @@ namespace CManager.Infrastructure.Interfaces
         
         Customer GetCustomerByEmail(string email);
 
-        bool UpdateCustomer(Customer updateCustomer, string? currentUserEmail = null);
+        bool UpdateCustomer(Customer updateCustomer);
         
         bool DeleteCustomer(string email);
 

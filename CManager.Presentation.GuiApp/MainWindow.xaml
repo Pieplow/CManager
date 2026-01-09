@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:CManager.Presentation.GuiApp.Views"
-        Title="MainWindow" Height="450" Width="600">
+        Title="MainWindow" Height="800" Width="800">
 
         <ContentControl Content="{Binding CurrentView}" />
         

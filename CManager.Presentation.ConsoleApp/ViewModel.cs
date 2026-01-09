@@ -180,6 +180,7 @@ namespace CManager.Presentation.ConsoleApp
             Console.WriteLine("\nPress any key to return to menu...");
             Console.ReadKey();
         }
+
         public void DeleteCustomer()
         {
             Console.Write("Enter Email of customer to delete: ");

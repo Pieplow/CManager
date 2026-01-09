@@ -50,6 +50,12 @@ namespace CManager.Infrastructure
             return customers.Find(c => c.Email == email);
         }
 
+        public Customer? GetCustomerById(Guid id)
+        {
+            var customers = _jsonFormatter.LoadCustomersFromFile();
+            return customers.FirstOrDefault(c => c.Id == id);
+        }
+
         /// <summary>
         /// Retrieves a list of all customers from the data source.
         /// </summary>
@@ -69,20 +75,25 @@ namespace CManager.Infrastructure
         /// <param name="customer">The customer object containing the updated information. The customer's email is used to identify which
         /// customer to update. Cannot be null.</param>
         /// <returns>true if the customer was found and updated successfully; otherwise, false.</returns>
-        public bool UpdateCustomer(string oldUserEmail, Customer updatedCustomer)
+        public bool UpdateCustomer(Guid id, Customer updatedCustomer)
         {
             var customers = _jsonFormatter.LoadCustomersFromFile();
 
-            if (!customers.Any(c => c.Email == oldUserEmail))
+            var customer = customers.FirstOrDefault(c => c.Id == id);
+            if (customer is null)
             {
                 return false;
             }
 
-            var updatedList = customers.
-                Select(c => c.Email == oldUserEmail ? updatedCustomer : c)
-                .ToList();
+            customer.FirstName = updatedCustomer.FirstName;
+            customer.LastName = updatedCustomer.LastName;
+            customer.Email = updatedCustomer.Email;
+            customer.PhoneNumber = updatedCustomer.PhoneNumber;
+            customer.Address.Street = updatedCustomer.Address.Street;
+            customer.Address.City = updatedCustomer.Address.City;
+            customer.Address.PostalCode = updatedCustomer.Address.PostalCode;
 
-            return _jsonFormatter.SaveCustomersToFile(updatedList);
+            return _jsonFormatter.SaveCustomersToFile(customers);
         }
 
         /// <summary>
